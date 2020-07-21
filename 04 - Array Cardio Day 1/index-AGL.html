@@ -31,31 +31,67 @@
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
-    const fifteen=inventors.filter(inventor=>(inventor[year]>=1500 && inventor[year]<1600));
+    const fifteen=inventors.filter(inventor=>(inventor.year>=1500 && inventor.year<1600)); /*only returns true false and filters basis that*/
+    console.table(fifteen);
     
-
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    const nameArray=inventors.map(inventor=>`${inventor.first} ${inventor.last}`);/*runs for every element. {} not needed when it's a single line specifying return value*/
+    console.log(nameArray);
+    
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    const sorted=inventors.sort((a,b) => (a.year>b.year) ? 1 :-1); /*sort syntax of +1 and -1. Implemented through ternary operator*/
+    console.table(sorted);
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    const netAge=inventors.reduce((total,inventor) => (total + inventor.passed-inventor.year),0); /*First variable passed is the accumulator, with the initial value. any function can be done with second variable. 3rd(opt) is index and 4th(opt) is the Array itself*/
+    console.log(netAge);
 
     // 5. Sort the inventors by years lived
+    const maxLife=inventors.sort((a,b)=> ((a.passed-a.year)>(b.passed-b.year))?-1:1);
+    console.table(maxLife);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
+    //const category=document.querySelector('.mw-category');/*after identifying the Class from the page DOM*/
+    //const links=Array.from(category.querySelectorAll('a'));/*to shortlist elements with a links. array.from because Map cannot be used on nodelist. you can also use a spread operator -(...QUERY)*/
+    //const de = links.map(a=>a.textContent)                 /*to create an Array out of the text content in each of the elements*/      
+      //              .filter(name=>name.includes('de'));     /*to filter just the ones that include de*/
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    const sortPeople=people.sort((a,b)=>{
+        const [alast,afirst]=a.split(',');/*split the two elements to label as first and last name*/
+        const [blast,bfirst]=b.split(',');
+
+        return (alast>blast)? 1:-1;
+    });
+    console.log(sortPeople);
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const sumInst=data.reduce((total,unit)=>{
+        if(!total[unit]){  //this creates the property for the object total if it doesn't exist.
+            total[unit]=1;
+        }else {total[unit]+=1};
+        return total;
+    },{}); // here the initial value is an empty object, since we have to return a Tally (an object)
+    console.table(sumInst);
 
+    //9. reduce the above array in to another one with only uniques:
+
+    const uniquedata=data.reduce((total,unit)=>{
+        if(total.indexOf(unit)==-1){ //indexof returns -1 if the element doesn't exist in the array.
+            total.push(unit);
+        }
+        return total;
+    },[]);
+    console.log(uniquedata);
   </script>
 </body>
 </html>
